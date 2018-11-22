@@ -5,3 +5,7 @@ type Task struct {
 	title string
 	done  bool
 }
+
+type TaskManager struct {
+	tasks []*Task
+}
