@@ -16,9 +16,26 @@ func NewTaskManager() *TaskManager {
 	return &TaskManager{}
 }
 
+func iterateOverTasks(allTasks []*Task, task *Task) bool {
+	condition := false
+	length := len(allTasks)
+
+	for i := 0; i < length; i++ {
+		t := allTasks[i]
+		if (*t).title == (*task).title {
+			condition = true
+		}
+	}
+
+	return condition
+}
+
 func (m *TaskManager) Save(task *Task) {
-	copy := *task
-	m.tasks = append(m.tasks, &copy)
+	condition := iterateOverTasks(m.All(), task)
+	if !condition {
+		copy := *task
+		m.tasks = append(m.tasks, &copy)
+	}
 }
 
 func (m *TaskManager) All() []*Task {

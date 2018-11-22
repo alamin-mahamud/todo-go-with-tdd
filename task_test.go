@@ -87,4 +87,15 @@ func TestNewTask(t *testing.T) {
 			t.Errorf("modification after save won't have any effect")
 		}
 	})
+
+	t.Run("test save twice should not duplicate data", func(t *testing.T) {
+		task, _ := NewTask("New Task")
+		m := NewTaskManager()
+		m.Save(task)
+		m.Save(task)
+		all := m.All()
+		if len(all) != 1 {
+			t.Errorf("Save one task only once")
+		}
+	})
 }
