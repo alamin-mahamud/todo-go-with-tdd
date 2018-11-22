@@ -73,4 +73,18 @@ func TestNewTask(t *testing.T) {
 			t.Errorf("expected %v, got %v", newTask, all)
 		}
 	})
+
+	t.Run("Modifying after saving doesn't change saved copy", func(t *testing.T) {
+		task, _ := NewTask("New Task For modifying")
+
+		taskManager := NewTaskManager()
+		taskManager.Save(task)
+
+		all := taskManager.All()
+		task2 := all[0]
+		task.title = "Changed"
+		if task2.title == task.title {
+			t.Errorf("modification after save won't have any effect")
+		}
+	})
 }
